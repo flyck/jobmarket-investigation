@@ -1,0 +1,130 @@
+<!-- <div style="display: grid; place-items: center; width: 80%; margin: 0 auto;"> -->
+<!--   <canvas style="grid-row: 1; width: 20%;" id="myChart"></canvas> -->
+<!--   <canvas style="grid-row: 2; width: 20%;" id="consultingChart"></canvas> -->
+<!--   <canvas style="grid-row: 3; width: 20%;" id="languagesChart"></canvas> -->
+<!-- </div> -->
+
+
+<div style="display: grid; grid-template-columns: repeat(1, minmax(0, 40%)); grid-template-rows: repeat(auto-fill, 1fr); width: 80%; margin: 0 auto;">
+  <canvas style="display: inline-block; width: 40%;"  id="consultingChart">Grid item 2</canvas>
+  <canvas style="display: inline-block; width: 40%;"  id="languagesChart">Grid item 3</canvas>
+  <canvas style="display: inline-block; width: 40%;"  id="frameworkChart">Grid item 3</canvas>
+  <canvas style="display: inline-block; width: 40%;"  id="companySizesChart">Grid item 3</canvas>
+  <!-- Add more grid items as needed -->
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+  const backgroundColor =  [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(255, 159, 64, 0.2)',
+    'rgba(255, 205, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(201, 203, 207, 0.2)'
+  ]
+  const borderColor = [
+    'rgb(255, 99, 132)',
+    'rgb(255, 159, 64)',
+    'rgb(255, 205, 86)',
+    'rgb(75, 192, 192)',
+    'rgb(54, 162, 235)',
+    'rgb(153, 102, 255)',
+    'rgb(201, 203, 207)'
+  ]
+
+  const consultingCtx = document.getElementById('consultingChart');
+  new Chart(consultingCtx, {
+    type: 'bar',
+    data: {
+      labels: ["Consulting", "Regular"],
+      datasets: [{
+        label: '# of Consulting Companies',
+        data: [34, 123],
+        borderWidth: 1,
+        backgroundColor,
+        borderColor,
+      }],
+
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const frameworkCtx = document.getElementById('frameworkChart');
+  new Chart(frameworkCtx, {
+    type: 'bar',
+    data: {
+      labels: ["Vue","Angular","React","Svelte"],
+      datasets: [{
+        label: '# of Framework Mentions',
+        data: [18,20,40,4],
+        borderWidth: 1,
+        backgroundColor,
+        borderColor,
+      }],
+
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const languagesCtx = document.getElementById('languagesChart');
+  new Chart(languagesCtx, {
+    type: 'bar',
+    data: {
+      labels: ["JavaScript","Java","Kotlin","TypeScript","SQL","Rust","Scala","Python","SAP","Perl","Lua","C++","Golang","Ruby","Swift","C#","PHP","Pascal","Tcl","Julia"],
+      datasets: [{
+        label: '# of Job Language Mentions',
+        data: [36,66,12,43,42,17,25,23,7,6,18,4,9,4,8,4,12,1,1,1],
+        borderWidth: 1,
+        backgroundColor,
+        borderColor,
+      }],
+
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+ const companySizesCtx = document.getElementById('companySizesChart');
+  new Chart(companySizesCtx, {
+    type: 'bar',
+    data: {
+      labels: ["2 to 10","1 to 50","11 to 50","51 to 200","201 to 500","501 to 1,000","1,001 to 5,000","5,001 to 10,000","10,000+","unknown"],
+      datasets: [{
+        label: 'Company Size',
+        data: [3,4,10,19,9,6,12,9,16,69],
+        borderWidth: 1,
+        backgroundColor,
+        borderColor,
+      }],
+
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
