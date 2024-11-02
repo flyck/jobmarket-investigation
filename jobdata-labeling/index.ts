@@ -10,7 +10,8 @@ const popularLanguages = [
   "PHP",
   "Ruby",
   "Swift",
-  "Go",
+  //"Go", // hard to label (intersects with Google Cloud & more)
+  "Golang",
   "Kotlin",
   "Rust",
   "TypeScript",
@@ -29,19 +30,25 @@ const popularLanguages = [
   "Assembly",
   "Fortran",
   "Pascal",
+  "SAP",
 ];
 
 const popularFrontendFrameworks = [
   "React",
   "Angular",
   "Vue",
-  "Ember",
+  "Ember.js",
   "Backbone",
   "Meteor",
   "Svelte",
   "Preact",
   "Aurelia",
   "Polymer"
+]
+
+const consultingLabels = [
+  "consulting",
+  "beratung",
 ]
 
 async function main() {
@@ -59,6 +66,7 @@ async function main() {
       const smallDescription = job.description.toLowerCase()
       const smallTitle = job.title.toLowerCase()
       let mentionedLanguages: string[] = []
+      let mentionedFrameworks: string[] = []
 
       popularLanguages.forEach((language) => {
         if (smallTitle.includes(language.toLowerCase())) {
@@ -69,19 +77,108 @@ async function main() {
       })
       popularFrontendFrameworks.forEach((framework) => {
         if (smallTitle.includes(framework.toLowerCase())) {
-          mentionedLanguages.push(framework)
+          mentionedFrameworks.push(framework)
         } else if (smallDescription.includes(framework.toLowerCase())) {
-          mentionedLanguages.push(framework)
+          mentionedFrameworks.push(framework)
         }
       })
+
+      consultingLabels.forEach((label) => {
+        if (smallDescription.includes(label.toLowerCase())) {
+          job["is_consulting"] = true
+        }
+      })
+      if (!job["is_consulting"]) job["is_consulting"] = false
       job["languages"] = mentionedLanguages
+      job["frameworks"] = mentionedFrameworks
       return job
     })
     .map((job) => (
-      { title: job.title, company: job.company, companySize: job.company_num_employees, posted: job.date_posted, languages: job.languages })
+      {
+        title: job.title,
+        company: job.company,
+        companySize: job.company_num_employees,
+        posted: job.date_posted,
+        languages: job.languages,
+        frameworks: job.frameworks,
+        isConsulting: job.is_consulting,
+        link: job.job_url
+      })
     )
 
   console.table(result)
+
+  // get company sizes
+  const companySizes: { [key: string]: number } = {
+    "2 to 10": 0,
+    "1 to 50": 0,
+    "11 to 50": 0,
+    "51 to 200": 0,
+    "201 to 500": 0,
+    "501 to 1,000": 0,
+    "1,001 to 5,000": 0,
+    "5,001 to 10,000": 0,
+    "10,000+": 0,
+  }
+
+
+  result.forEach((job) => {
+    const size = job.companySize || "unknown"
+    if (companySizes[size]) {
+      companySizes[size] += 1
+    } else {
+      companySizes[size] = 1
+    }
+  })
+
+  console.table(companySizes)
+
+  // get consulting jobs
+  const consultingStats = {
+    consulting: 0,
+    regular: 0
+  }
+  result.forEach((result) => {
+    if (result.isConsulting) {
+      consultingStats.consulting += 1
+    } else {
+      consultingStats.regular += 1
+    }
+  })
+
+  console.table(consultingStats)
+
+  // get language stats
+  const skillStats: { [key: string]: number } = {}
+  result.forEach((job) => {
+    job.languages?.forEach((language) => {
+      if (skillStats[language]) {
+        skillStats[language] += 1
+      } else {
+        skillStats[language] = 1
+      }
+    })
+  })
+
+  console.table(Object.entries(skillStats).sort((a, b) => b[1] - a[1]))
+  console.log(`Labels: ${Object.keys(skillStats).map((val) => `"${val}"`)}`)
+  console.log(`Data: ${Object.values(skillStats)}`)
+
+  // get framework stats
+  const frameworkStats: { [key: string]: number } = {}
+  result.forEach((job) => {
+    job.frameworks?.forEach((language) => {
+      if (frameworkStats[language]) {
+        frameworkStats[language] += 1
+      } else {
+        frameworkStats[language] = 1
+      }
+    })
+  })
+
+  console.table(Object.entries(frameworkStats).sort((a, b) => b[1] - a[1]))
+  console.log(`Labels: ${Object.keys(frameworkStats).map((val) => `"${val}"`)}`)
+  console.log(`Data: ${Object.values(frameworkStats)}`)
 }
 
 await main()
@@ -92,6 +189,8 @@ interface JobListing {
   job_url: string;
   job_url_direct: string;
   languages?: string[];
+  frameworks?: string[];
+  is_consulting?: boolean;
   title: string;
   company: string;
   location: string;
