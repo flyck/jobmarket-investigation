@@ -1,0 +1,33 @@
+export interface JobListing {
+  id: string;
+  site: string;
+  job_url: string;
+  job_url_direct: string;
+  languages?: string[];
+  frameworks?: string[];
+  is_consulting?: boolean;
+  title: string;
+  company: string;
+  location: string;
+  date_posted: string;
+  job_type: string;
+  salary_source: string;
+  interval: string;
+  min_amount: string;
+  max_amount: string;
+  currency: string;
+  is_remote: string;
+  job_level: string;
+  job_function: string;
+  listing_type: string;
+  emails: string;
+  description: string;
+  company_industry: string;
+  company_url: string;
+  company_logo: string;
+  company_url_direct: string;
+  company_addresses: string;
+  company_num_employees: string;
+  company_revenue: string;
+  company_description: string;
+}
