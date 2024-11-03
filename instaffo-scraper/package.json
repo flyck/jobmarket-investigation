@@ -1,5 +1,5 @@
 {
-  "name": "instaffo-numbers",
+  "name": "instaffo-scraper",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {

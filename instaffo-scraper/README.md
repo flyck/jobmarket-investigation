@@ -1,4 +1,4 @@
-# instaffo-numbers
+# instaffo-scraper
 
 Instaffo numbers investigation is dismissed, as instaffo has only so few open jobs. 7 Software
 jobs in Hamburg and 22 in Berlin on 1.11.2024.
