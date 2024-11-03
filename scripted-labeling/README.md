@@ -1,4 +1,6 @@
-# jobdata-labeling
+# scripted-labeling
+
+Follows the approach of adding labels like job programming languages via a simple word search.
 
 To install dependencies:
 

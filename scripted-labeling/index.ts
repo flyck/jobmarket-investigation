@@ -130,8 +130,9 @@ async function main() {
       companySizes[size] = 1
     }
   })
-
   console.table(companySizes)
+  console.log(`Labels: ${Object.keys(companySizes).map((val) => `"${val}"`)}`)
+  console.log(`Data: ${Object.values(companySizes)}`)
 
   // get consulting jobs
   const consultingStats = {

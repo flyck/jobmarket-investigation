@@ -1,5 +1,5 @@
 {
-  "name": "jobdata-labeling",
+  "name": "scriped-labeling",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
