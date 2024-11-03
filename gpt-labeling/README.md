@@ -4,18 +4,18 @@
 
 1. get indeed job data by executing the jobspy-scraper
 1. run the gpt labeling queries
-   ```bash
+```bash
 bun run index.ts
-   ```
+```
 1. copy the output of the query into the result.ts file and fix any json formatting issues
 1. run biome linter for easy formatting of the results
-   ```bash
+```bash
 bunx @biomejs/biome format --write resultData.ts
-   ```
+```
 1. transform that data into graph labels for chartjs
-   ```bash
+```bash
 bun run result.ts
-   ```
+```
 
 ## Setup
 
