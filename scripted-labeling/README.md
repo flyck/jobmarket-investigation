@@ -2,6 +2,8 @@
 
 Follows the approach of adding labels like job programming languages via a simple word search.
 
+Dropped this approach as it became clear that I would have to work with Regexes and pivoted to gpt.
+
 To install dependencies:
 
 ```bash
