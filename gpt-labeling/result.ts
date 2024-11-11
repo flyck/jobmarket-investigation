@@ -25,8 +25,7 @@ function main() {
     }
   })
   console.table(companySizes)
-  console.log(`Labels: ${Object.keys(companySizes).map((val) => `"${val}"`)}`)
-  console.log(`Data: ${Object.values(companySizes)}`)
+  console.log(JSON.stringify(companySizes).replace(/[\n\r]/g, ' '))
 
   // get consulting jobs
   const consultingStats = {
@@ -40,7 +39,7 @@ function main() {
       consultingStats.regular += 1
     }
   })
-  console.table(consultingStats)
+  console.log(JSON.stringify(consultingStats).replace(/[\n\r]/g, ' '))
 
   // get language stats
   const skillStats: { [key: string]: number } = {}
@@ -53,11 +52,9 @@ function main() {
       }
     })
   })
-  console.table(Object.entries(skillStats).sort((a, b) => b[1] - a[1]))
-  const topSkills = Object.entries(skillStats).sort((a, b) => b[1] - a[1]).map(([key, value]) => { const tmp: any = {}; tmp[key] = value; return tmp })
-  console.log(topSkills)
-  console.log(`Labels: ${Object.keys(topSkills).map((val) => `"${val}"`)}`)
-  console.log(`Data: ${Object.values(topSkills)}`)
+  const topSkills = Object.fromEntries(Object.entries(skillStats).sort((a, b) => b[1] - a[1]))
+  console.table(topSkills)
+  console.log(JSON.stringify(topSkills).replace(/[\n\r]/g, ' '))
 
   // get framework stats
   const frameworkStats: { [key: string]: number } = {}
@@ -70,9 +67,9 @@ function main() {
       }
     })
   })
-  console.table(Object.entries(frameworkStats).sort((a, b) => b[1] - a[1]))
-  console.log(`Labels: ${Object.keys(frameworkStats).map((val) => `"${val}"`)}`)
-  console.log(`Data: ${Object.values(frameworkStats)}`)
+  const topFrameworks = Object.fromEntries(Object.entries(frameworkStats).sort((a, b) => b[1] - a[1]))
+  console.table(topFrameworks)
+  console.log(JSON.stringify(topFrameworks).replace(/[\n\r]/g, ' '))
 }
 
 main()

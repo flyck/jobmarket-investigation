@@ -131,8 +131,7 @@ async function main() {
     }
   })
   console.table(companySizes)
-  console.log(`Labels: ${Object.keys(companySizes).map((val) => `"${val}"`)}`)
-  console.log(`Data: ${Object.values(companySizes)}`)
+  console.log(inlineJson(companySizes))
 
   // get consulting jobs
   const consultingStats = {
@@ -146,7 +145,6 @@ async function main() {
       consultingStats.regular += 1
     }
   })
-
   console.table(consultingStats)
 
   // get language stats
@@ -160,10 +158,8 @@ async function main() {
       }
     })
   })
-
   console.table(Object.entries(skillStats).sort((a, b) => b[1] - a[1]))
-  console.log(`Labels: ${Object.keys(skillStats).map((val) => `"${val}"`)}`)
-  console.log(`Data: ${Object.values(skillStats)}`)
+  console.log(inlineJson(skillStats))
 
   // get framework stats
   const frameworkStats: { [key: string]: number } = {}
@@ -178,8 +174,11 @@ async function main() {
   })
 
   console.table(Object.entries(frameworkStats).sort((a, b) => b[1] - a[1]))
-  console.log(`Labels: ${Object.keys(frameworkStats).map((val) => `"${val}"`)}`)
-  console.log(`Data: ${Object.values(frameworkStats)}`)
+  console.log(inlineJson(frameworkStats))
+}
+
+function inlineJson(input: object) {
+  return JSON.stringify(input).replace(/[\n\r]/g, ' ')
 }
 
 await main()
